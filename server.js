@@ -1,8 +1,8 @@
-require('dotenv').config();
+require('dotenv').config();2
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const Student = require('./models/Student');
+const Teacher = require('./models/teacher');
 
 const app = express();
 
@@ -16,32 +16,32 @@ mongoose.connect(process.env.MONGO_URI)
   .catch(err => console.log(err));
 
 /* CREATE */
-app.post('/students', async (req, res) => {
+app.post('/teachers', async (req, res) => {
   try {
-    const student = new Student(req.body);
-    await student.save();
-    res.json({ message: "Student Added Successfully" });
+    const teacher = new Teacher(req.body);
+    await teacher.save();
+    res.json({ message: "Teacher Added Successfully" });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 /* READ */
-app.get('/students', async (req, res) => {
-  const students = await Student.find().sort({ createdAt: -1 });
-  res.json(students);
+app.get('/teachers', async (req, res) => {
+  const teachers = await Teacher.find().sort({ createdAt: -1 });
+  res.json(teachers);
 });
 
 /* UPDATE */
-app.put('/students/:id', async (req, res) => {
-  await Student.findByIdAndUpdate(req.params.id, req.body);
-  res.json({ message: "Student Updated Successfully" });
+app.put('/teachers/:id', async (req, res) => {
+  await Teacher.findByIdAndUpdate(req.params.id, req.body);
+  res.json({ message: "Teacher Updated Successfully" });
 });
 
 /* DELETE */
-app.delete('/students/:id', async (req, res) => {
-  await Student.findByIdAndDelete(req.params.id);
-  res.json({ message: "Student Deleted Successfully" });
+app.delete('/teachers/:id', async (req, res) => {
+  await Teacher.findByIdAndDelete(req.params.id);
+  res.json({ message: "Teacher Deleted Successfully" });
 });
 
 app.listen(process.env.PORT, () => {
